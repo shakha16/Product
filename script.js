@@ -1,4 +1,5 @@
-let url = "http://localhost:1010"
+let url = "http://localhost:3001"
+let id
 
 function getData() {
     axios.get(url + '/users')
@@ -29,8 +30,8 @@ function users(arr) {
 
         div.classList.add('div')
 
-        name = `${item.name}`
-        sale = `ㅤㅤㅤㅤㅤㅤㅤ${item.sale}`
+        name.innerHTML = item.name
+        sale.innerHTML = item.sale
 
         div.append(name, sale)
         tovars.append(div)
@@ -41,14 +42,16 @@ function users(arr) {
             modal.style.display = "block"
             inp.placeholder = item.name
             input.placeholder = item.sale
+            id = item.id
         }
         done.onclick = () => {
             let changed = inp.value
             let change = input.value
-            if (inp.value >= 0) {
+            if (inp.value.length <= 0) {
                 alert('Введите данные')
             } else {
-                axios.patch(url + '/users/' + item.id, {
+                console.log(item.id);
+                axios.patch(url + '/users/' + id, {
                     name: changed,
                     sale: change
                 })
